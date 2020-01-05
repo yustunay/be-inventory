@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restfulwebservices.barcode;
+package com.in28minutes.rest.webservices.restfulwebservices.product;
 
 import java.util.HashMap;
 

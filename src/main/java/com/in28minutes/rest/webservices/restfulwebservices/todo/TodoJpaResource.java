@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -44,18 +43,18 @@ public class TodoJpaResource {
 	@PutMapping("/jpa/users/{username}/todos/{id}")
 	public ResponseEntity<Todo> updateTodo(@PathVariable String username, @PathVariable long id, @RequestBody Todo todo){		
 		todoJpaRepository.save(todo);		
-		return new ResponseEntity<Todo>(todo,HttpStatus.OK);
+		return new ResponseEntity<>(todo,HttpStatus.OK);
 	}
 	
 	@PostMapping("/jpa/users/{username}/todos")
 	public ResponseEntity<Void> createTodo(@PathVariable String username, @RequestBody Todo todo){
 		todo.setUsername(username);
-		Todo createdTodo = todoJpaRepository.save(todo);
+		final Todo createdTodo = todoJpaRepository.save(todo);
 		
 		//Location
 		//Get current resource url
 		//{id}
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdTodo.getId()).toUri();			
+		final URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdTodo.getId()).toUri();			
 		return ResponseEntity.created(uri).build();
 	}
 
